@@ -1,0 +1,80 @@
+
+#search-id{
+  margin-left:1px;height:33px;background-color:#0F2B4E;font-family:serif;opacity:78%;
+}
+
+#form-id{
+width:400px;float:right;margin-top:150px;
+}
+
+#nav-id{
+  background-color:#010F20;padding:3px;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.tag-class{
+  background-color:#010F20;opacity:90%;
+}
+.tag-class a{
+  color:white;margin-left:2px;font-size:15px;opacity:60%;
+}
+#subject-id{
+  background-color:#010F20;opacity: 80%;
+}
+
+#topic-id{
+color:white;opactiy:50%;text-align:center;font-family:serif;
+}
+
+#bookmark-id{
+color:#010F20;opacity:70%;
+}
+#dbookmark-id{
+  float:left;color:#010F20;margin-top:5px;margin-left:3px;margin-right:5px;opacity:70%;
+}
+
+#ff{
+  font-family:Serif;
+}
+
+#summernote img{
+  max-width:100%;
+}
+
+#tag-id{
+  font-size:12px;padding:2px;border-radius:2px;opacity:80%;margin-top:5px;
+}
+
+.comment-class #span-1{
+  margin-left:8px; font-weight:500; font-size:18px;opacity:75%;
+}
+
+.comment-class #span-2{
+  margin-left:3px; font-weight:500; opacity:30%;
+}
+.share-class li{
+  display:inline-block;margin-left:5px;
+}
+
+#topic-id{
+color:white;opactiy:50%;text-align:center;font-family:serif;
+}
+#link-id{
+  color:white;font-family:serif;opacity:70%;font-size:18px;
+}
+
+#title-id{
+  color:white;opacity:80%;font-family:serif;
+}
+#link1-id{
+  margin-top:5px;color:#d1603b;font-family:serif;
+}
+#link2-id{
+  margin-top:5px;color:#271985;font-family:serif;
+}

@@ -1,0 +1,126 @@
+{% extends 'mobile/index.html' %}
+{% load crispy_forms_tags %}
+{% load blog_tags %}
+{% load social_share %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+
+
+{% if is_topic %}
+
+  <div class="container">
+    <div id='subject-id'><br>
+      <h4 class='text-center' id='title-id'>{{ post.subject.topic }}</h4><br></div>
+        <div class="jumbotron">
+          <div class='list-group rounded-0'>
+          {% for post in post.get_all_related_posts %}
+          {% if request.path == post.get_absolute_url %}
+          <h6 id='link1-id'><a class="list-group-item-active" id='link1-id' href="{{ post.get_absolute_url }}"><i class='fas fa-caret-right'></i>{{ post.title|capfirst }}</a></h6>
+          {% else %}
+          <h6 id='link2-id'><a class="list-group-item-active" id='link2-id' href="{{ post.get_absolute_url }}">
+          {{ post.title|capfirst }}</a></h6>
+          {% endif %}
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+
+{% endif %}
+
+<div class="card">
+  <div class='card-header'>
+    <h5 style='font-family:serif'>{{ post.title|capfirst }}</h5>
+  </div>
+</div>
+<div>
+  <a id='dbookmark-id' href="{% url 'blog:bookmark_post' post.id %}">
+   <span>
+    {% if is_bookmarked %}
+    <i class='fas fa-bookmark fa-lg'></i>
+    {% else %}
+    <i class='far fa-bookmark fa-lg'></i>
+    {% endif %}
+   </span>
+  </a>
+  <div>
+    Tags: {% for value in post.get_all_tags|slice:":8" %}
+ <a class='btn btn-secondary btn-sm' href="{% url 'blog:post_list_by_tag' value.name %}" id='tag-id'>{{ value.name|capfirst }}</a>{% endfor %}
+  <div class='card px-1 mt-5 border-0'>
+    <div id='summernote'>{{ post.body|safe }}</>
+  </div>
+ </div>
+</div>
+
+<div style='white-space:nowrap;overflow-x:auto;'>
+  <div><h5 class='ml-3 mt-3'>Share with</h5>
+  <div class='share-class ml-3'>
+    <li>{% post_to_facebook post.get_absolute_url %}</li>
+    <li>{% post_to_whatsapp post.get_absolute_url %}</li>
+    <li>{% post_to_twitter post.get_absolute_url %}</li>
+    <li>{% post_to_reddit post.get_absolute_url %}</li>
+    <li>{% post_to_telegram post.get_absolute_url %}</li>
+  </div>
+</div>
+</div>
+<hr>
+
+<div class='comment-class' style='margin-left:-30px;'>
+  <ul><br>
+  <h4><i class='fa fa-comments fa-lg mr-2'></i>{{ post.get_all_comments.count }} comments</h4><br><hr><br>
+  {% for comment in post.get_all_comments %}
+  <div>
+    {% if comment.user %}
+    <i class='fa fa-user fa-lg' style='opacity:75%;'></i>
+    <span id='span-1'>{{ comment.user.first_name|capfirst }}</span>
+    {% else %}
+    <i class='fa fa-comment' style='opacity:75%'></i>
+    <span id='span-1'>{{ comment.name }}<em>(anonymous)</em></span>
+    {% endif %}
+    <span id='span-2'>{{ comment.created_on }}</span>
+  </div>
+
+  <div class="mt-3 mb-4">
+    <p style="font-size:17px;padding:4px;"><i class='fas fa-caret-right fa-lg ml-1 mr-2'></i>{{ comment.body }}</p>
+  </div>
+  {% if not forloop.last %}<hr>{% endif %}
+  {% endfor %}
+  </ul>
+<hr>
+</div>
+
+<div>
+  <form class="px-4" action="index.html" method="post">
+    {% csrf_token %}
+    {{ comment_form|crispy }}
+    <button class='btn btn-secondary' name="button" style='background-color:#010F20'>post comment</button>
+  </form>
+</div>
+
+{% if not is_topic %}
+    <div class='card-header text-center mt-5'><h4 class='mt-3 mb-3'>Related Posts</h4></div>
+      {% for post in post.get_all_related_posts %}
+     <div class="px-1 mb-2">
+       <div class='card shadow space'>
+         <div class="card-body" style='height:20rem;'>
+           <h5 style='color:#0B0446;font-family:serif'>{{ post.title|capfirst }}</h5><hr>
+           <p class="card-text">{{ post.description|safe|truncatewords:50 }}...</p>
+           <a href='{{ post.get_absolute_url }}' style='position:absolute;right:5px;bottom:5px;'>
+             <button class='btn btn-outline-secondary btn-sm'>read more</button></a>
+             <div style='position:absolute;left:5px;bottom:5px'>
+               <a href="{% url 'blog:bookmark_post' post.id %}">
+                 <span id='bookmark-id'>
+                   {% worked user=request.user post=post as worked %}
+                   {% if worked %}
+                   <i class='fas fa-bookmark fa-lg'></i>
+                   {% else %}
+                   <i class='far fa-bookmark fa-lg'></i>
+                   {% endif %}
+                 </span>
+               </a>
+             </div>
+         </div>
+       </div>
+     </div>
+    {% endfor %}
+  {% endif %}
+{% endblock content %}

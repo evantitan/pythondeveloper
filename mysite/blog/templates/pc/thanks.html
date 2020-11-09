@@ -1,0 +1,66 @@
+{% load static %}
+
+{% if request.user_agent.is_pc %}
+<!DOCTYPE html>
+<style media="screen">
+  .thank h4{
+    position: absolute;
+    left:500px;
+    top:200px;
+    font-family: cambria;
+  }
+  .thank i{
+    position: absolute;
+    left:630px;
+    top:260px;
+    color:blue;
+  }
+</style>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <title>Thanks!</title>
+  </head>
+  <body>
+    <div class='thank'>
+      <h4>THANKS, WE APPRECIATE YOUR FEEDBACK.</h4>
+      <i class='fas fa-thumbs-up fa-3x'></i>
+    </div>
+  </body>
+</html>
+
+{% else %}
+
+<!DOCTYPE html>
+<style media="screen">
+.thanks h4{
+  position: absolute;
+  left:20px;
+  top:130px;
+}
+.thanks i{
+  position: absolute;
+  left:170px;
+  top:200px;
+  color:#1C93EA;
+}
+
+</style>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <title></title>
+  </head>
+  <body>
+    <div class='thanks'>
+    <h4>THANKS, WE APPRECIATE YOUR FEEDBACK.</h4>
+    <i class='fas fa-thumbs-up fa-3x'></i>
+  </div>
+  </body>
+</html>
+
+{% endif %}

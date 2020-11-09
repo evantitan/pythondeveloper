@@ -1,0 +1,36 @@
+{% extends 'pc/index.html' %}
+{% block content %}
+<style media="screen">
+.trash-class a:hover{
+  color:red;
+}
+.trash-class{
+  position:absolute;
+  right:5px;
+  bottom:5px;
+}
+.recent{
+  width:300px;margin-left:500px;background-color:#010F20;color:white;opacity:90%;margin-bottom:20px;
+}
+
+</style>
+
+<div class='card-header mb-5'><h5 class='text-center mt-3 mb-3'>{{ all_bookmarks.count }} Saved Posts</h5></div>
+
+
+<div class="row mx-0 mt-4">
+  {% for post in all_bookmarks %}
+    <div class="col-lg-4 col-md-12 col-sm-12 px-1">
+      <div class='card shadow space' style="padding:0px;">
+        <div class="card-body" style='height:20rem;'>
+          <h5 class="card-title" style='font-family:cambria'>{{ post.bookmark.title|capfirst }}</h5><hr>
+            <p class="card-text">{{ post.bookmark.description|safe|truncatewords:50 }}...</p>
+            <a href="{{ post.bookmark.get_absolute_url }}" style='position:absolute;left:5px;bottom:5px;'><button class='btn btn-outline-secondary btn-sm' name="button">Read Post</button></a>
+            <span class='trash-class'>Date: {{ post.bookmarked_on.date }}
+              <a href="{% url 'blog:delete_bookmark' post.id %}"><i class='fas fa-trash ml-2'></i></a></span>
+        </div>
+      </div><p></p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

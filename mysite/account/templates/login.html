@@ -1,0 +1,91 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+{% if request.user_agent.is_pc %}
+<style media="screen">
+.first-info{
+  background-image: url("{% static 'images/python3.1.jpg' %}");
+  width: 100%;
+  height:700px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+</style>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap/css/style.css' %}" rel="stylesheet">
+  </head>
+<body>
+<div class="first-info">
+  <div><br><br><br>
+    <div class="container"style='width:40%'>
+      <h5 class='text-center'><span style='color:#4381A4'>Login or </span><a style='opacity:70%' href="{% url 'account:signup' %}"><u>create an account</u></a></h5><br>
+      <form method="post" class='uniForm'style='color:#4381A4'>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class='btn btn-primary' type="submit" name="button">Login</button>
+      <a class='ml-2' href="{% url 'account:reset_password' %}"><u>Forgot Password</u></a>
+    </form>
+  </div><br>
+<div class="text-center">
+    <a href="{% url 'social:begin' 'google-oauth2' %}">
+      <button class='btn btn-secondary btn-md border-0' type="button" name="button" style='width:200px;background-color:#AD0A05'>
+      <i class='fab fa-google mr-2'></i>Login with Google</button></a><br><br>
+    <a href="{% url 'social:begin' 'facebook' %}">
+      <button class='btn btn-secondary btn-md border-0' type="button" name="button" style='width:200px;background-color:#05188E'>
+        <i class='fab fa-facebook-f mr-2'></i>Login with Facebook</button>
+  </div>
+</div>
+</body>
+</html>
+
+{% else %}
+
+<style media="screen">
+.first-info{
+  background-image: url("{% static 'images/python3.1.jpg' %}");
+  width: device-width;
+  height:750px;
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+</style>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap/css/style.css' %}" rel="stylesheet">
+  </head>
+<body>
+<div class="first-info">
+<div><br><br><br>
+<h5 class='text-center'><span style='color:#4381A4'>Login or </span><a style='opacity: 70%;' href="{% url 'account:signup' %}"><u>create an account</u></a></h5><br>
+  <div class="container mb-5">
+  <form method="post" class='uniForm' style='color:#4381A4'>
+      {% csrf_token %}
+      {{ form|crispy }}
+  <button class='btn btn-primary' type="submit" name="button" style='opacity:80%;'>Login</button>
+   or<a class='ml-2' style="opacity:70%" href="{% url 'account:reset_password' %}"><u>Forgot Password</u></a>
+  </form>
+</div>
+</div>
+<div class="text-center">
+  <a href="{% url 'social:begin' 'google-oauth2' %}">
+    <button class='btn btn-secondary btn-md border-0' type="button" name="button" style='width:200px;background-color:#AD0A05;'>
+      <i class='fab fa-google fa-lg mr-2'></i>Login with Google</button></a><br><br>
+  <a href="{% url 'social:begin' 'facebook' %}">
+    <button class='btn btn-secondary btn-md border-0' type="button" name="button" style='width:200px;background-color:#05188E;'>
+      <i class='fab fa-facebook-f fa-lg mr-2'></i>Login with Facebook</button></a>
+    </div><br>
+  </div>
+</body>
+</html>
+
+
+{% endif %}

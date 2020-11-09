@@ -1,0 +1,128 @@
+{% load static %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<!-- STYLE -->
+
+<style media="screen">
+.base-top{
+  background-image: url("{% static 'images/back2.jpg' %}");
+  width: auto;
+  height:250px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+@media screen and (max-width:360px)
+{
+  img{
+    max-width: 360px;
+  }
+}
+#line{height:0.5px;color:gray;background-color:gray;opacity:10%;margin-top:4px;"}
+.contact-class{
+   background-color:#001226;color:white;
+}
+.contact-class img{
+  width:32%;
+  height:35%;
+  margin-left:120px;
+}
+</style>
+
+
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}{% endblock title %}</title>
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel='stylesheet'>
+  <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'custom/mobile_style.css' %}" rel="stylesheet">
+</head>
+
+  <body>
+
+  <!-- TOP OF THE NAVBAR -->
+  <div class="base-top">
+    <form class="form-inline d-flex justify-content-center md-form form-sm active-green active-green-2" id='form-id' action='{% url 'blog:post_search' %}' method='GET'>
+      <input class="form-control form-control-sm w-50" style='opacity:60%' type="text" placeholder="Search" aria-label="Search" name="search" required>
+      <button class="btn btn-primary btn-sm border-0" type="submit" name="button" id='search-id'>Search</button>
+    </form>
+  </div>
+
+  <!-- NAVBAR -->
+  <div id='wrapper'>
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-dark navbar-expand-sm" id='nav-id'>
+        <div style='color:white;opacity:60%;font-weight:900;margin-bottom:-0.5rem;'>
+
+          {% if request.user.is_authenticated %}
+            <h5><i class='fas fa-user mr-2 ml-1'></i>{{ request.user.first_name|capfirst }}</h5>
+            <h5 class='ml-3'><a href="{% url 'blog:review' %}">FEEDBACK</a></h5>
+          {% else %}
+            <h5 class='ml-3' style='color:white'><a href="{% url 'account:login' %}">Login</a></h5>
+          {% endif %}
+
+        </div>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon" style='height:'></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <hr style="height:0.5px;color:gray;background-color:gray;opacity:30%;margin-top:7px;margin-bottom:4px;">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0" style='font-family:serif'>
+          <li class="nav-item active ml-3">
+            <h5><a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a></h5>
+            <hr id='line'>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item ml-3">
+          <h5><a class="nav-link" href="{% url 'blog:bookmark' %}">Bookmarked</a></h5>
+            <hr id='line'>
+          </li>
+          {% endif %}
+          <li class="nav-item ml-3">
+            <h5><a class="nav-link" href="{% get_first_post 'python-for-begginers' %}">Python</a></h5>
+            <hr id='line'>
+          </li>
+          <li class="nav-item ml-3">
+            <h5><a class="nav-link" href="{% url 'blog:review' %}">FEEDBACK</a></h5>
+            <hr id='line'>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item ml-3">
+            <h5><a class="nav-link" href="{% url 'account:change_password' %}">change password</a></h5><hr id='line'>
+          </li>
+          <li class="nav-item ml-3">
+            <h5><a class="nav-link" href="{% url 'account:logout' %}">Logout</a></h5>
+          </li>
+          {% endif %}
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  {% block content %}{% endblock content %}
+
+  <!-- CONTACT SECTION -->
+
+<div class="text-center" style='background-color:#001226;color:white;'>
+  <img src="{% static 'images/creator.jpg' %}" class='rounded-circle' alt="" style='height:120px;width:100px;margin-top:40px;'>
+  <div style='font-family:serif;margin-top:20px;'>
+    <h5>ABOUT THE AUTHOR</h5>
+    <p>Dharmendra Kotarya holds a B.Tech with honors in Computer Science and Engineering.<br>
+      He writes articles and blog related to programming and technology and has specialisation in Python, C, C++, Html, Css, Java-Script.
+    </p><br>
+</div>
+</div>
+
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+
+  </body>
+</html>

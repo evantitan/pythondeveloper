@@ -1,0 +1,186 @@
+{% extends 'mobile/index.html' %}
+{% load blog_tags %}
+{% load social_share %}
+{% load static %}
+{% block content %}
+
+<style media="screen">
+.separator {
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width:80%;
+    font-weight:bold;
+    font-size:23px;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #000;
+}
+.separator::before {
+    margin-right: .50em;
+}
+.separator::after {
+    margin-left: .50em;
+}
+</style>
+
+<!-- Tags -->
+
+<div class='tag-class'><br>
+  <h6 class="text-center mb-3" style='color:white;opacity:50%'>Filter posts by Tag</h6>
+  {% for value in all_tags %}
+  <a href="{% url 'blog:post_list_by_tag' value.name %}">
+   <button class='btn btn-outline-secondary text-light btn-sm mr-1 mb-2' name="button">{{ value.name|capfirst }}</button>
+  </a>
+  {% endfor %}
+   <br><br>
+</div>
+
+<!-- Home post -->
+
+<div class="card" id='ff'>
+    <div class="card-body" id='summernote'>
+      <h5>AN INTRODUCTION TO PYTHON</h5><hr>
+      {{ home_post.body|safe }}
+    </div>
+</div>
+
+<!--  ALL RECENT POSTS -->
+
+<div class="separator mt-5">Recent post</div><br><br>
+<div class="row mx-0">
+  {% for post in recent_posts %}
+    <div class="col-lg-4 col-md-12 col-sm-12 px-1 mb-2">
+      <div class='card shadow space'>
+        <div class="card-body" style='height:20rem;'>
+          <h5 id='ff'>{{ post.title|capfirst }}</h5><hr>
+            <p style='font-family:times'>{{ post.description|safe|truncatewords:50 }}...</p>
+            <a href='{{ post.get_absolute_url }}' style='position:absolute;right:5px;bottom:5px;'>
+              <button class='btn btn-outline-secondary btn-sm'>read more</button></a>
+              <div style='position:absolute;left:5px;bottom:5px;'>
+                <a id='bookmark-id' href="{% url 'blog:bookmark_post' post.id %}">
+                <span>
+                  {% worked user=request.user post=post as worked %}
+                  {% if worked %}
+                  <i class='fas fa-bookmark fa-lg'></i>
+                  {% else %}
+                  <i class='far fa-bookmark fa-lg'></i>
+                  {% endif %}
+                </span>
+                </a>
+              </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- QUOTES ON PYTHON -->
+
+<div class="text-center mt-5 mb-2">
+    <h2>What people say about Python Programming</h2>
+</div>
+
+<div class='card'>
+  <div class="card-body shadow">
+    <img class='card-img-top' src="{% static 'images/guido_van_rossum.jpg' %}" alt="">
+      <blockquote id='quote-id'><br>
+          <em>"The joy of coding Python should be in seeing short,
+          concise, readable classes that express a lot of action in a small amount of clear code
+          -- not in reams of trivial
+          code that bores the reader to death.</em>"</blockquote><br><br>
+          <strong style='float:right'>--- Guido Van Rossum, The beneviolent dictator
+      Creater and Core developer of Python Programming.</strong>
+  </div>
+</div>
+
+<div class='card mt-2'>
+  <div class="card-body shadow">
+    <p id='quote-id'>
+      <i>"Python has been an important part of Google since the beginning,
+          and remains so as the system grows and evolves. Today dozens of Google engineers use Python,
+          and we're looking for more people with skills in this language."</i><br><br>
+       <strong style='float:right'>
+          --- Peter Norvig, software architect at
+          Google, Inc
+        </strong></p>
+  </div>
+</div>
+
+<div class='card mt-2'>
+  <div class="card-body shadow">
+      <p id = 'quote-id'>
+          <i>"Python is fast enough for our site
+          and allows us to produce maintainable features in record times,
+           with a minimum of developers"</i><br><br>
+        <strong style='float:right'>
+          --- Cuong DO<br>
+              software architect at Youtube
+        </strong></p>
+  </div>
+</div>
+
+<div class='card mt-2'>
+  <div class="card-body shadow">
+      <p id='quote-id'>
+        <i>"Journyx technology, from the source code of our software to the code that maintains our Web site and ASP sites,
+           is entirely based on Python.
+           It increases our speed of development and keeps us several steps ahead of competitors
+           while remaining easy to read and use.
+           It's as high level of a language as you can have without running into functionality problems.
+           I estimate that Python makes our coders 10 times more productive than Java programmers,
+           and 100 times more than C programmers."</i><br><br>
+        <strong style='float:right'>
+          --- Curt Finch
+            CEO, Journyx
+        </strong>
+    </div>
+</div>
+
+<!-- STATISTICS DATA ABOUT PYTHON -->
+
+<div class="container-fluid mt-4">
+  <div>
+    <h4 class='text-center'>Real World Applications of Python</h4><br>
+    <p>1. Web developments</p>
+    <p>2. Desktop Gui Applications</p>
+    <p>3. Console Based Applications</p>
+    <p>4. Scientific & Numeric</p>
+    <p>5. Business Applications</p>
+    <p>6. 3D CAD Applications</p>
+    <p>7. Enterprise Applications</p>
+    <p>8. Image Processing</p>
+    <p>9. Data Science</p>
+    <p>10. Aritificial Intellgence</p>
+    <p>11. Machine Learning</p>
+  </div>
+  <hr>
+<div class="table-class mt-5">
+    <h5 class='text-center'>PYPL popularity of programming languages</h5><br>
+    <table>
+      <tr>
+        <th>Rank</th>
+        <th>Language</th>
+        <th>Share</th>
+        <th>Trends</th>
+      </tr>
+    </table>
+    <table class = "gfg">
+      {% for row in data %}
+      <tr>
+        {% for col in row %}
+          <td class = "geeks">{{ col }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+ </div><hr>
+<h5>Most engaged programming language over the years</h5><br>
+<img src="{% static 'images/python-popularity.png' %}" alt="python-popularity" width='100%'>
+</div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'mobile/content.html' %}
+{% block content %}
+
+<div class='text-center'>
+  <h6>Python for begginers</h6>
+</div>
+
+<div class="card border-light">
+      {% for post in all_posts %}
+        <div class="card-header" style='margin-left:-0.9rem'>
+            <a style="color:green;font-variant:small-caps;" href="{{ post.get_absolute_url }}">{{ post.title|capfirst }}</a>
+        </div>
+      {% endfor %}
+</div>
+<hr style="width:100%;text-align:center;margin-left:0">
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends 'mobile/index.html' %}
+{% block content %}
+
+<style media="screen">
+.trash-class{
+  margin-bottom:0px;
+}
+.trash-class b{
+  padding:5px;
+}
+</style>
+
+
+<!-- ALL BOOKMARKS OF USERS -->
+<div class='text-center mt-2'>
+  <div class='card-header text-center'><h4 class='mt-3 mb-3'>{{ all_bookmarks.count }} saved</h4></div>
+</div>
+
+<div class="px-1 mb-2">
+  {% for post in all_bookmarks %}
+  <div class="col-lg-4 col-md-12 col-sm-12 px-1 mb-2">
+    <div class='card shadow space'>
+      <div class="card-body" style='height:20rem;'>
+        <h5 style='font-family:serif'>{{ post.bookmark.title|capfirst }}</h5><hr>
+          <p style='font-family:times'>{{ post.bookmark.description|safe|truncatewords:50 }}...</p>
+          <a href='{{ post.bookmark.get_absolute_url }}' style='position:absolute;left:5px;bottom:5px;'>
+            <button class='btn btn-outline-secondary btn-sm'>read post</button></a>
+            <div style='position:absolute;right:5px;bottom:5px'>
+              Date: {{ post.bookmarked_on.date }}
+              <a id='bookmark-id' href="{% url 'blog:bookmark_post' post.bookmark.id %}">
+              <span>
+                <i class='fas fa-trash ml-2'></i>
+              </span>
+              </a>
+            </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}
